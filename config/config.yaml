@@ -1,0 +1,17 @@
+db:
+  type: "mysql"
+  dsn: "root:123456@tcp(127.0.0.1:3306)/article?charset=utf8mb4&parseTime=true"
+  maxidle: "10"
+  maxopen: 100
+  logmode: true
+  maxlifetime: 30
+
+redis:
+  host: "127.0.0.1:6397"
+
+server:
+  addr: "0.0.0.0:9999"
+
+log:
+  dir: "./log"
+  level: "info"
