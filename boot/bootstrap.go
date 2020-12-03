@@ -2,7 +2,6 @@ package boot
 
 import (
 	"github.com/pkg/errors"
-	"mermaid/global"
 )
 
 func Boot() error {
@@ -25,8 +24,6 @@ func Boot() error {
 	if err := bootHTTP(); err != nil {
 		return errors.WithMessage(err, "初始化http路由出错")
 	}
-
-	global.Logger.Info("[程序初始化已完成]")
 
 	return nil
 }

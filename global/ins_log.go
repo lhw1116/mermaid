@@ -6,13 +6,12 @@ import (
 	"fmt"
 	rotatelogs "github.com/lestrrat-go/file-rotatelogs"
 	"github.com/sirupsen/logrus"
+	"mermaid/model"
 	"os"
 	"strings"
 )
-var Logger *logrus.Logger
 
-
-type textFormatter struct {}
+type textFormatter struct{}
 
 func (f *textFormatter) Format(entry *logrus.Entry) ([]byte, error) {
 	var b = &bytes.Buffer{}
@@ -29,28 +28,28 @@ func (f *textFormatter) Format(entry *logrus.Entry) ([]byte, error) {
 	return b.Bytes(), nil
 }
 
-
 func InitLog(l *log) error {
 	path := l.Dir
 	if path == "" {
 		return errors.New("The log path is empty")
 	}
 
-	Logger = logrus.New()
-	Logger.SetLevel(logrus.InfoLevel)
+	model.Logger = logrus.New()
+	model.Logger.SetLevel(logrus.InfoLevel)
 	if _, err := os.Stat(path); os.IsNotExist(err) {
 		err := os.MkdirAll(path, os.ModePerm)
 		if err != nil {
 			return err
 		}
 	}
-	Logger.Formatter = new(textFormatter)
+	model.Logger.Formatter = new(textFormatter)
 	filename := "%Y-%m-%d.log"
 	logFileName := fmt.Sprintf("%s/%s", path, filename)
 	rl, err := rotatelogs.New(logFileName)
 	if nil != err {
 		return err
 	}
-	Logger.SetOutput(rl)
+	model.Logger.SetOutput(rl)
+	model.Logger.Info("日志服务初始化成功")
 	return nil
 }

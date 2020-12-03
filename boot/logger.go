@@ -5,7 +5,7 @@ import (
 )
 
 func bootLogger() error {
-	logInfo  := global.Conf.Log
+	logInfo := global.Conf.Log
 	if err := global.InitLog(logInfo); err != nil {
 		return err
 	}
